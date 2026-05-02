@@ -1,0 +1,16 @@
+{
+    "projectName": "Ifc",
+    "languages": [
+        {
+            "id": "ifc",
+            "grammar": "src/ifc.langium",
+            "fileExtensions": [
+                "ifc"
+            ],
+            "textMate": {
+                "out": "syntaxes/ifc.tmLanguage.json"
+            }
+        }
+    ],
+    "out": "src/generated"
+}
