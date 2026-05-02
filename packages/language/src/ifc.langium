@@ -13,32 +13,40 @@ entry StepFile:
     "END-ISO-10303-21" ";"
 ;
 FileMetaData:
-    "File_DESCRIPTION" "("
-    "(" descriptionList+=STRING (COMMA descriptionList+=STRING )* ")" ","
-    version+=STRING "," ")" ";"
+    "FILE_DESCRIPTION" "("
+    "(" descriptionList+=STRING ("," descriptionList+=STRING )* ")" ","
+    version=STRING  ")" ";"
     
     "FILE_NAME" "("
     name=STRING ","
     timestamp=STRING ","
-    "(" author+=STRING (COMMA author+=STRING)* COMMA ")" ","
-    "(" organization+=STRING (COMMA organization+=STRING )")" ","
+    "(" author+=STRING ("," author+=STRING)* ")" ","
+    "(" organization+=STRING ("," organization+=STRING )* ")" ","
     preprocessorVersion=STRING ","
+    originatingSystem=STRING
     authorization=STRING ")" ";"
 
     "FILE_SCHEMA" "("
-    "(" version+=STRING (COMMA version+=STRING)* COMMA ")" ")" ";"
+    "(" version+=STRING ("," version+=STRING)* ")" ")" ";"
 ;
 DataEntries:
+    (enttries+=DataEntry)+;
+
+DataEntry:
     ref=REF "=" entityType=ENTITY 
     "(" params+=Param ("," params+=Param)* ")"
     ";"
 ;
 Param:
-    ref=[+Param:REF]
+    ref=[DataEntry:REF]
     |number=NUMBER
     |enum=ENUM
     |default=DEFAULT
-    |nothing=NOTHING;
+    |nothing=NOTHING
+    |string=STRING
+    |List;
+List:
+    "(" children+=Param ("," children+=Param)* ")";
 // ---------------------------terminal------------------------------
 
 
@@ -46,11 +54,10 @@ hidden terminal Comments: /\/\*[^]*?\*\//;
 hidden terminal Whitespace: /[ \t\r\n\f]+/;
 terminal REF: /#[1-9][0-9]*/;
 
-terminal ENTITY: /[A-Z]+/;
+terminal ENTITY: /[[A-Z][A-Z0-9]*/;
 terminal STRING:/"(\\.|[^"\\])*"|'(\\.|[^'\\])*'/;
 terminal NUMBER:/-?\d+(\.\d+)?([eE][+-]?\d+)?/;
-terminal COMMA:",";
-terminal ENUM:/\.[A-Z]\./;
+terminal ENUM:/\.[A-Z_]+\./;
 terminal DEFAULT:"*";
 terminal NOTHING:"$";
 
