@@ -15,7 +15,7 @@ entry StepFile:
 FileMetaData:
     "FILE_DESCRIPTION" "("
     "(" descriptionList+=STRING ("," descriptionList+=STRING )* ")" ","
-    version=STRING  ")" ";"
+    descriptionVersion=STRING  ")" ";"
     
     "FILE_NAME" "("
     name=STRING ","
@@ -27,7 +27,7 @@ FileMetaData:
     authorization=STRING ")" ";"
 
     "FILE_SCHEMA" "("
-    "(" version+=STRING ("," version+=STRING)* ")" ")" ";"
+    "(" schemaVersion+=STRING ("," schemaVersion+=STRING)* ")" ")" ";"
 ;
 DataEntries:
     (enttries+=DataEntry)+;
