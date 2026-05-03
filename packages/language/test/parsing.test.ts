@@ -2,16 +2,16 @@ import { beforeAll, describe, expect, test } from "vitest";
 import { EmptyFileSystem, type LangiumDocument } from "langium";
 import { expandToString as s } from "langium/generate";
 import { parseHelper } from "langium/test";
-import type { Model } from "ifc-language";
-import { createIfcServices, isModel } from "ifc-language";
+import type {  StepFile } from "ifc-language";
+import { createIfcServices, isStepFile } from "ifc-language";
 
 let services: ReturnType<typeof createIfcServices>;
-let parse:    ReturnType<typeof parseHelper<Model>>;
-let document: LangiumDocument<Model> | undefined;
+let parse:    ReturnType<typeof parseHelper<StepFile>>;
+let document: LangiumDocument<StepFile> | undefined;
 
 beforeAll(async () => {
     services = createIfcServices(EmptyFileSystem);
-    parse = parseHelper<Model>(services.Ifc);
+    parse = parseHelper<StepFile>(services.Ifc);
 
     // activate the following if your linking test requires elements from a built-in library, for example
     // await services.shared.workspace.WorkspaceManager.initializeWorkspace([]);
@@ -27,7 +27,7 @@ describe('Parsing tests', () => {
 
         // check for absence of parser errors the classic way:
         //  deactivated, find a much more human readable way below!
-        // expect(document.parseResult.parserErrors).toHaveLength(0);
+        expect(document.parseResult.parserErrors).toHaveLength(0);
 
         expect(
             // here we use a (tagged) template expression to create a human readable representation
@@ -36,9 +36,8 @@ describe('Parsing tests', () => {
             //  by means of the reusable function 'checkDocumentValid()' to sort out (critical) typos first;
             checkDocumentValid(document) || s`
                 Persons:
-                  ${document.parseResult.value?.persons?.map(p => p.name)?.join('\n  ')}
-                Greetings to:
-                  ${document.parseResult.value?.greetings?.map(g => g.person.$refText)?.join('\n  ')}
+                //   ${document.parseResult.value?.dataEntries.enttries?.map(p => p.entityType)?.join('\n  ')}
+                // Greetings to:
             `
         ).toBe(s`
             Persons:
@@ -55,6 +54,6 @@ function checkDocumentValid(document: LangiumDocument): string | undefined {
           ${document.parseResult.parserErrors.map(e => e.message).join('\n  ')}
     `
         || document.parseResult.value === undefined && `ParseResult is 'undefined'.`
-        || !isModel(document.parseResult.value) && `Root AST object is a ${document.parseResult.value.$type}, expected a 'Model'.`
+        || !isStepFile(document.parseResult.value) && `Root AST object is a ${document.parseResult.value.$type}, expected a 'Model'.`
         || undefined;
 }

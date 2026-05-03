@@ -2,6 +2,7 @@
     "name": "vscode-ifc-ls",
     "description": "The extension specific package",
     "version": "0.0.1",
+    "publisher": "lilr",
     "displayName": "ifc-ls",
     "type": "module",
     "engines": {

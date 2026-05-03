@@ -1,4 +1,4 @@
-import type { Model } from 'ifc-language';
+import type { StepFile } from 'ifc-language';
 import { createIfcServices, IfcLanguageMetaData } from 'ifc-language';
 import chalk from 'chalk';
 import { Command } from 'commander';
@@ -15,7 +15,7 @@ const packageContent = await fs.readFile(packagePath, 'utf-8');
 
 export const generateAction = async (fileName: string, opts: GenerateOptions): Promise<void> => {
     const services = createIfcServices(NodeFileSystem).Ifc;
-    const model = await extractAstNode<Model>(fileName, services);
+    const model = await extractAstNode<StepFile>(fileName, services);
     const generatedFilePath = generateJavaScript(model, fileName, opts.destination);
     console.log(chalk.green(`JavaScript code generated successfully: ${generatedFilePath}`));
 };
@@ -24,7 +24,7 @@ export type GenerateOptions = {
     destination?: string;
 }
 
-export default function(): void {
+export default function (): void {
     const program = new Command();
 
     program.version(JSON.parse(packageContent).version);

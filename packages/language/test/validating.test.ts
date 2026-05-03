@@ -3,16 +3,16 @@ import { EmptyFileSystem, type LangiumDocument } from "langium";
 import { expandToString as s } from "langium/generate";
 import { parseHelper } from "langium/test";
 import type { Diagnostic } from "vscode-languageserver-types";
-import type { Model } from "ifc-language";
-import { createIfcServices, isModel } from "ifc-language";
+import type { StepFile } from "ifc-language";
+import { createIfcServices, isStepFile } from "ifc-language";
 
 let services: ReturnType<typeof createIfcServices>;
-let parse:    ReturnType<typeof parseHelper<Model>>;
-let document: LangiumDocument<Model> | undefined;
+let parse:    ReturnType<typeof parseHelper<StepFile>>;
+let document: LangiumDocument<StepFile> | undefined;
 
 beforeAll(async () => {
     services = createIfcServices(EmptyFileSystem);
-    const doParse = parseHelper<Model>(services.Ifc);
+    const doParse = parseHelper<StepFile>(services.Ifc);
     parse = (input: string) => doParse(input, { validation: true });
 
     // activate the following if your linking test requires elements from a built-in library, for example
@@ -57,7 +57,7 @@ function checkDocumentValid(document: LangiumDocument): string | undefined {
           ${document.parseResult.parserErrors.map(e => e.message).join('\n  ')}
     `
         || document.parseResult.value === undefined && `ParseResult is 'undefined'.`
-        || !isModel(document.parseResult.value) && `Root AST object is a ${document.parseResult.value.$type}, expected a 'Model'.`
+        || !isStepFile(document.parseResult.value) && `Root AST object is a ${document.parseResult.value.$type}, expected a 'Model'.`
         || undefined;
 }
 

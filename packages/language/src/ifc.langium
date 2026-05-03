@@ -5,10 +5,10 @@ grammar Ifc
 entry StepFile:
     "ISO-10303-21" ";"
     "HEADER" ";"
-    FileMetaData
+    fileMetaData = FileMetaData
     "ENDSEC" ";"
     "DATA" ";"
-    DataEntries
+    dataEntries = DataEntries
     "ENDSEC" ";"
     "END-ISO-10303-21" ";"
 ;
@@ -23,7 +23,7 @@ FileMetaData:
     "(" author+=STRING ("," author+=STRING)* ")" ","
     "(" organization+=STRING ("," organization+=STRING )* ")" ","
     preprocessorVersion=STRING ","
-    originatingSystem=STRING
+    originatingSystem=STRING ","
     authorization=STRING ")" ";"
 
     "FILE_SCHEMA" "("
@@ -33,7 +33,7 @@ DataEntries:
     (enttries+=DataEntry)+;
 
 DataEntry:
-    ref=REF "=" entityType=ENTITY 
+    name=REF "=" entityType=ENTITY 
     "(" params+=Param ("," params+=Param)* ")"
     ";"
 ;

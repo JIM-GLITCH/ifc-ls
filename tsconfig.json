@@ -4,7 +4,7 @@
     "module": "NodeNext",
     "moduleResolution": "nodenext",
     "lib": [
-        "ES2020"
+      "ES2020"
     ],
     "sourceMap": true,
     "strict": true,
@@ -14,15 +14,18 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "declaration": true,
-    "composite": true
+    "composite": true,
+    "types": [
+      "node"
+    ]
   },
   "include": [
-     "**/src/**/*",
-     "**/test/**/*"
+    "**/src/**/*",
+    "**/test/**/*"
   ],
   "exclude": [
-     "**/lib/**/*",
-     "**/out/**/*",
-     "**/node_modules/**/*"
-  ]
+    "**/lib/**/*",
+    "**/out/**/*",
+    "**/node_modules/**/*"
+  ],
 }
