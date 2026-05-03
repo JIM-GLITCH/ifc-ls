@@ -1,7 +1,7 @@
 {
     "name": "vscode-ifc-ls",
-    "description": "The extension specific package",
-    "version": "0.0.1",
+    "description": "ifc language server",
+    "version": "0.0.2",
     "publisher": "lilr",
     "displayName": "ifc-ls",
     "type": "module",
@@ -12,17 +12,26 @@
         "Programming Languages"
     ],
     "contributes": {
-        "languages": [{
-            "id": "ifc",
-            "aliases": ["ifc", "ifc"],
-            "extensions": [".ifc"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "ifc",
-            "scopeName": "source.ifc",
-            "path": "syntaxes/ifc.tmLanguage.json"
-        }]
+        "languages": [
+            {
+                "id": "ifc",
+                "aliases": [
+                    "ifc",
+                    "ifc"
+                ],
+                "extensions": [
+                    ".ifc"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "ifc",
+                "scopeName": "source.ifc",
+                "path": "syntaxes/ifc.tmLanguage.json"
+            }
+        ]
     },
     "activationEvents": [
         "onLanguage:ifc"
@@ -47,6 +56,7 @@
         "esbuild": "~0.25.5"
     },
     "vsce": {
-      "dependencies": false
-    }
+        "dependencies": false
+    },
+    "license": "MIT"
 }

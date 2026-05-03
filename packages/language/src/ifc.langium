@@ -50,7 +50,7 @@ terminal STRING: "'"
 
 terminal ENTITY_INSTANCE_NAME: "#" DIGIT+;
 terminal ENUMERATION: "." UPPER (UPPER|DIGIT)* ".";
-terminal HEX:/[0-7A-F]/;
+terminal HEX:/[0-9A-F]/;
 terminal BINARY: '"' /[0-3]/ HEX* '"';
 
 // ------------------------------------------------------------------
